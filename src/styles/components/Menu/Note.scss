@@ -1,0 +1,35 @@
+.vote-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 10px auto;
+    width: 80%;
+  }
+  
+  .vote-emoji {
+    font-size: 32px;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  .vote-emoji:hover {
+    font-size: 35px;
+  }
+  .vote-container button {
+    display: none;
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #ebebeb;
+    color: #000100ce;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .vote-emoji.selected {
+    opacity: 1;
+  }

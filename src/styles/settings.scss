@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: inter, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif,'sans-serif';
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #000100ce;
+  color: #ebebeb;
+  overflow-x: hidden;
+}
+.container{
+    font-family: inter, sans-serif;
+    max-width: 100%;
+    width: 390px;
+    min-width: 100%;
+}
+.btn{
+  user-select: none;
+  padding: 5px;
+  background-color: #C2948A;
+  color: white;
+
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  &:hover{
+    border: 1px solid;
+  }
+}
+.btn3{
+  user-select: none;
+  background-color: #C2948A;
+  color: white;
+
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  &:hover{
+    border: 1px solid;
+  }
+}
+.btn2{
+  user-select: none;
+  align-self: flex-start;
+  padding: 5px;
+  background-color: #28536B;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: small;
+  &:hover{
+    border: 1px solid;
+  }
+}
+.inputFormation::placeholder{
+  color: white;
+}
+.inputFormation{
+  border: 1px solid;
+}
+input[type="file"] {
+  display: none;
+}
+label.btn2 {
+  font-weight: normal;
+  font-size: small;
+}
+.inputFormation{
+  background-color: #28536B;
+  color: white;
+}

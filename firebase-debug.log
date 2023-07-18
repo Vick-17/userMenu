@@ -1,0 +1,21 @@
+[debug] [2023-07-04T12:01:41.545Z] ----------------------------------------------------------------------
+[debug] [2023-07-04T12:01:41.549Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\leava\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-07-04T12:01:41.549Z] CLI Version:   12.4.2
+[debug] [2023-07-04T12:01:41.550Z] Platform:      win32
+[debug] [2023-07-04T12:01:41.550Z] Node Version:  v20.3.1
+[debug] [2023-07-04T12:01:41.550Z] Time:          Tue Jul 04 2023 14:01:41 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2023-07-04T12:01:41.550Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-07-04T12:01:41.562Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-07-04T12:01:41.562Z] > authorizing via signed-in user (vegavict92@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\leava\OneDrive\Documents\frontDuBackRepafpa
+
