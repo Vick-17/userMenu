@@ -10,7 +10,7 @@ const accueil = () => {
       <Header />
       <Card />
       <Note />
-      <Footer />
+        <Footer />
     </>
   );
 };
