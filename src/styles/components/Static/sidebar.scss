@@ -1,0 +1,77 @@
+/* Styling pour le conteneur principal */
+.crossword-container {
+  color: #333;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Styling pour la grille de mots croisés */
+.crossword-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 40px);
+  grid-template-rows: repeat(9, 40px);
+  gap: 1px;
+  background-color: #e0e0e0;
+  border: 1px solid #333;
+}
+
+.crossword-row {
+  display: flex;
+}
+
+.crossword-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #333;
+  font-size: 18px;
+}
+
+.black-cell {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Styling pour les indices des mots */
+.clues {
+  margin-left: 20px;
+}
+
+.across-clues,
+.down-clues {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.clue {
+  margin-bottom: 5px;
+}
+
+.clue-number {
+  font-weight: bold;
+}
+
+/* Styling pour les cases de lettres éditables (à personnaliser en fonction de vos besoins) */
+input[type='text'] {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Styling pour les cases de lettres correctes (à personnaliser en fonction de vos besoins) */
+.correct-letter {
+  background-color: lightgreen;
+}

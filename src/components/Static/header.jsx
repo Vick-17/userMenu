@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBurgerContainerOpen, setIsBurgerContainerOpen] = useState(false);
   const [cookies, setCookies] = useCookies(['monCookie']);
 
-  useEffect(() =>  {
+  useEffect(() => {
     const cookieValue = cookies.monCookie;
   }, [cookies])
 
@@ -41,18 +42,9 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Connexion</h2>
-            <form className="login-form">
-              <select className="custom-select">
-                <option value="">Formation</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-              </select>
-              <button type="submit" onClick={handleSetCookies}>
-                Selectioné la formation
-              </button>
-            </form>
+            <Link to="/main"> - Connaitre son heure de passage </Link>
+            <Link to="/main"> - Voir le tableau des alergène</Link>
+            <Link to="/main"> - Occupation </Link>
           </div>
         </div>
       )}

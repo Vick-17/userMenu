@@ -14,6 +14,9 @@ body {
   background-color: #000100ce;
   color: #ebebeb;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .container{
     font-family: inter, sans-serif;

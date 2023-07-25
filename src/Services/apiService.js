@@ -1,7 +1,7 @@
 import {verifDate} from "./formatDate";
 
-const API_URL = 'http://localhost:8080/api';
-const API_URL_MICROSANDRINE = 'http://localhost:8000'
+const API_URL = 'http://212.227.179.49:8080/api';
+const API_URL_MICROSANDRINE = 'http://212.227.179.49:8080'
 
 
 
@@ -11,7 +11,7 @@ export const fetchMenuByDate = (date) => {
     if(verifDate(date)){
         return fetch(`${API_URL}/menus/search/menusByDate?date=${date}`)
             .then(response => {
-                if (!response.ok) {
+                if (!response.ok) { 
                 }
                 return response.json();
             })
@@ -69,8 +69,8 @@ export const getFichiers = () => {
 }
 
 //suppression d'un fichier
-export function deleteFile(url) {
-    return fetch(url, {
+export function deleteFile(id) {
+    return fetch(`${API_URL}/fichiers/delete/`+id, {
         method: 'DELETE',
     })
         .then(response => {
@@ -214,6 +214,42 @@ export const getDailyMessages = () => {
             console.log(error)
         });
 }
+export const getDailyEnigme = () => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/getdailyenigme`, {
+        method: "GET",
+        headers: {
+            'Cache-Control': 'no-cache'
+        }
+    })
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                return data
+            }
+        )
+        .catch((error) => {
+            console.log(error)
+        });
+}
+
+export const getAllInfos = () => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/getallinfos`, {
+        method: "GET",
+        headers: {
+            'Cache-Control': 'no-cache'
+        }
+    })
+        .then((response) => response.json())
+        .then(
+            (data) => {
+                return data
+            }
+        )
+        .catch((error) => {
+            console.log(error)
+        });
+}
+
 export const getIndesirablesMessages = () => {
     return fetch(`${API_URL_MICROSANDRINE}/messages/getindesirables`, {
         method: "GET",
@@ -245,6 +281,45 @@ export const setunsetMessage = (messageId) => {
         console.log(error);
     })
 }
+export const sendInfo = (message) => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message)
+    })
+}
+export const setTv = (messageId) => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/setinfotv/`+messageId, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).catch((error)=>{
+        console.log(error);
+    })
+}
+export const deleteInfo = (messageId) => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/`+messageId, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).catch((error)=>{
+        console.log(error);
+    })
+}
+export const setPhone = (messageId) => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/setinfophone/`+messageId, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).catch((error)=>{
+        console.log(error);
+    })
+}
 
 export const getRandomMessages = (id) => {
     return fetch(`${API_URL_MICROSANDRINE}/messages/getrandom/`+id, {
@@ -262,4 +337,18 @@ export const getRandomMessages = (id) => {
         .catch((error) => {
             console.log(error)
         });
+}
+
+export const getArtistOfDay = () => {
+    return fetch(`${API_URL_MICROSANDRINE}/getdailyartist`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error, status = ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(error => console.error(error));
 }

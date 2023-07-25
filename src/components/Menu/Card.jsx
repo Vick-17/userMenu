@@ -6,11 +6,12 @@ const Card = () => {
   const [menus, setMenus] = useState(null);
   const [date, setDate] = useState(null);
   const [formation, setFormation] = useState(null);
+  const [isEveningMenu, setIsEveningMenu] = useState(false); // Nouvel état pour le menu du soir
 
   useEffect(() => {
     const dateDuJour = new Date();
     const year = dateDuJour.getFullYear();
-    const month = ("0" + (dateDuJour.getMonth() + 1)).slice(-2); // Months are 0 based, hence the '+1'
+    const month = ("0" + (dateDuJour.getMonth() + 1)).slice(-2);
     const day = ("0" + dateDuJour.getDate()).slice(-2);
     const today = `${year}-${month}-${day}`;
     setDate(today);
@@ -21,6 +22,7 @@ const Card = () => {
       .catch((error) => {
         console.error(error);
       });
+    console.log(today);
   }, []);
 
   useEffect(() => {
@@ -42,7 +44,8 @@ const Card = () => {
     const nextDay = `${year}-${month}-${day}`;
     setDate(nextDay);
 
-    fetchMenuByDate(nextDay)
+    // Charger le menu du soir au lieu du menu du jour
+    fetchMenuByDate(nextDay, isEveningMenu ? "soir" : "jour")
       .then((data) => {
         setMenus(data);
       })
@@ -60,7 +63,22 @@ const Card = () => {
     const prevDay = `${year}-${month}-${day}`;
     setDate(prevDay);
 
-    fetchMenuByDate(prevDay)
+    // Charger le menu du soir au lieu du menu du jour
+    fetchMenuByDate(prevDay, isEveningMenu ? "soir" : "jour")
+      .then((data) => {
+        setMenus(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // Fonction pour basculer entre le menu du jour et du soir
+  const toggleMenuType = () => {
+    setIsEveningMenu(!isEveningMenu);
+    // Charger le menu du jour ou du soir en fonction de l'état
+    const menuType = isEveningMenu ? "jour" : "soir";
+    fetchMenuByDate(date, menuType)
       .then((data) => {
         setMenus(data);
       })
@@ -74,10 +92,12 @@ const Card = () => {
       <main>
         <div className="buttons-container">
           <button onClick={handleShowPrevDayMenu}>
-            Voir le menu précedent
+            Voir le menu précédent
           </button>
           <span>{formatDate(date)}</span>
-          <button onClick={handleShowNextDayMenu}>Voir le jour suivant</button>
+          <button onClick={handleShowNextDayMenu}>
+            Voir le {isEveningMenu ? "menu du soir" : "jour suivant"}
+          </button>
         </div>
         <div className="menu-category">
           <div className="title-plat-container">
@@ -109,13 +129,16 @@ const Card = () => {
           </div>
 
           {menus ? (
-            Object.values(menus.descriptionMenu.jour.entree).map(
-              (entree, index) => (
-                <div className="menu-item" key={index}>
-                  <span>{entree}</span>
-                </div>
-              )
-            )
+            // Afficher les entrées du menu du soir s'il est disponible, sinon du menu du jour
+            Object.values(
+              isEveningMenu && menus.descriptionMenu.soir
+                ? menus.descriptionMenu.soir.entree
+                : menus.descriptionMenu.jour.entree
+            ).map((entree, index) => (
+              <div className="menu-item" key={index}>
+                <span>{entree}</span>
+              </div>
+            ))
           ) : (
             <div className="loader">
               <span className="l">L</span>
@@ -154,13 +177,16 @@ const Card = () => {
           </div>
 
           {menus ? (
-            Object.values(menus.descriptionMenu.jour.plat).map(
-              (plat, index) => (
-                <div className="menu-item" key={index}>
-                  <span>{plat}</span>
-                </div>
-              )
-            )
+            // Afficher les plats du menu du soir s'il est disponible, sinon du menu du jour
+            Object.values(
+              isEveningMenu && menus.descriptionMenu.soir
+                ? menus.descriptionMenu.soir.plat
+                : menus.descriptionMenu.jour.plat
+            ).map((plat, index) => (
+              <div className="menu-item" key={index}>
+                <span>{plat}</span>
+              </div>
+            ))
           ) : (
             <div className="loader">
               <span className="l">L</span>
@@ -206,13 +232,16 @@ const Card = () => {
           </div>
 
           {menus ? (
-            Object.values(menus.descriptionMenu.jour.dessert).map(
-              (dessert, index) => (
-                <div className="menu-item" key={index}>
-                  <span>{dessert}</span>
-                </div>
-              )
-            )
+            // Afficher les desserts du menu du soir s'il est disponible, sinon du menu du jour
+            Object.values(
+              isEveningMenu && menus.descriptionMenu.soir
+                ? menus.descriptionMenu.soir.dessert
+                : menus.descriptionMenu.jour.dessert
+            ).map((dessert, index) => (
+              <div className="menu-item" key={index}>
+                <span>{dessert}</span>
+              </div>
+            ))
           ) : (
             <div className="loader">
               <span className="l">L</span>
@@ -227,8 +256,11 @@ const Card = () => {
             </div>
           )}
         </div>
+
         <div className="buttons-container">
-          <button>Voir le menu du soir</button>
+          <button onClick={toggleMenuType}>
+            Voir le {isEveningMenu ? "menu du jour" : "menu du soir"}
+          </button>
         </div>
       </main>
     </>

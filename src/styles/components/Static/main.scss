@@ -1,0 +1,31 @@
+/* CSS */
+.jqr-container {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebebeb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.jqr-content {
+  text-align: center;
+}
+
+.jqr-content p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #000100ce;
+  margin-bottom: 20px;
+}
+
+/* Styles responsives */
+@media (max-width: 600px) {
+  .jqr-container {
+    margin: 10px;
+  }
+}

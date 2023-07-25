@@ -4,15 +4,15 @@ import Card from "../components/Menu/Card";
 import Footer from "../components/Static/Footer";
 import Note from "../components/Menu/Note";
 
-const accueil = () => {
+const Accueil = () => {
   return (
     <>
       <Header />
       <Card />
       <Note />
-        <Footer />
+      <Footer />
     </>
   );
 };
 
-export default accueil;
+export default Accueil;
