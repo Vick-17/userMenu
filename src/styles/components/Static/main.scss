@@ -1,6 +1,6 @@
-/* CSS */
+/* Styles pour le conteneur principal */
 .jqr-container {
-  height: 75vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,8 +12,11 @@
   margin: 20px;
 }
 
+/* Styles pour le contenu */
 .jqr-content {
   text-align: center;
+  flex-grow: 1; /* Le contenu peut se développer pour remplir l'espace disponible */
+  overflow: auto; /* Ajout de défilement lorsque le contenu dépasse */
 }
 
 .jqr-content p {
@@ -23,9 +26,50 @@
   margin-bottom: 20px;
 }
 
+/* Styles pour afficher les réponses */
+.jqr-content div {
+  font-size: 16px;
+  font-style: italic;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* Styles pour le bouton */
+.jqr-content button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.jqr-content button:hover {
+  background-color: #45a049;
+}
+
+/* Styles pour les en-têtes de catégorie */
+.jqr-category-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.jqr-category-divider {
+  width: 80%;
+  height: 2px;
+  background-color: #ccc;
+  margin: 0 auto;
+}
+
 /* Styles responsives */
 @media (max-width: 600px) {
   .jqr-container {
     margin: 10px;
+    height: auto; /* Annulez la hauteur fixe pour permettre un redimensionnement automatique */
   }
 }
