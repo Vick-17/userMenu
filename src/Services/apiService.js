@@ -1,7 +1,7 @@
 import {verifDate} from "./formatDate";
 
-const API_URL = 'http://212.227.179.49:8080/api';
-const API_URL_MICROSANDRINE = 'http://212.227.179.49:8000'
+const API_URL = 'http://localhost:8080/api';
+const API_URL_MICROSANDRINE = 'http://localhost:8000'
 
 export const sendVoteToBdd = (numvote, numformation) => {
     const body = {
