@@ -6,14 +6,18 @@
     margin: 10px auto;
     width: 80%;
   }
-  
-  .vote-emoji {
-    font-size: 32px;
-    cursor: pointer;
-    opacity: 0.5;
+
+
+  .emojiLogo{
+    height: 50px;
+    width: 50px;
+    border: 5px solid transparent;
   }
-  .vote-emoji:hover {
-    font-size: 35px;
+  .emojiLogo:hover{
+    height: 50px;
+    width: 50px;
+    border: 0;
+
   }
   .vote-container button {
     display: none;

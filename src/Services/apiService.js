@@ -3,7 +3,42 @@ import {verifDate} from "./formatDate";
 const API_URL = 'http://212.227.179.49:8080/api';
 const API_URL_MICROSANDRINE = 'http://212.227.179.49:8000'
 
+export const sendVoteToBdd = (numvote, numformation) => {
+    const body = {
+        numvote: numvote,
+        numformation: Number(numformation)
+    }
+    return fetch(`${API_URL}/votes`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify(body)
+    }).then(response => {
+        return response.text();
+    }).catch(error => console.error(error));
+}
 
+export const checkStudent = () => {
+    return fetch(`${API_URL}/checkStudent`).then(response => {
+        return response.json();
+    }).catch(error => console.error(error));
+}
+
+export const affectFormation = (id) => {
+    return fetch(`${API_URL}/affectFormation/`+id, {
+        method: "POST"
+    })
+}
+export const voteMenu = (num) => {
+    return fetch(`${API_URL}/votes/`+num, {
+        method: "GET"
+    }).then(response => {
+        return response.text();
+    }).catch((error)=>{
+        console.log(error)
+    })
+}
 
 // recuperer les menus par date
 export const fetchMenuByDate = (date) => {

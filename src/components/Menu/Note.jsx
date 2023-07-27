@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import {sendVoteToBdd, voteMenu} from "../../Services/apiService";
+import {useCookies} from "react-cookie";
+import toast, {Toaster} from "react-hot-toast";
 
 const Note = () => {
     const [selectedEmoji, setSelectedEmoji] = useState(null);
     const [isVoteSent, setIsVoteSent] = useState(false);
+    const [cookies, setCookies] = useCookies(['cookieFormation', 'avote']);
 
     const vote = (emoji) => {
         setSelectedEmoji(emoji.getAttribute("data-emoji"));
@@ -12,46 +16,23 @@ const Note = () => {
         sendVoteButton.style.display = "block";
     };
 
-    const sendVote = () => {
-        if (selectedEmoji === null) {
-            alert("Veuillez sélectionner une note avant d'envoyer.");
-            return;
+    const sendVote = (num) => {
+        if(cookies.avote){
+            toast.error("Vous avez déjà voté")
+        }else{
+            if(cookies.cookieFormation){
+                sendVoteToBdd(num, cookies.cookieFormation).then((response)=>{
+                    console.log(response);
+                    let expiryDate = new Date();
+                    expiryDate.setHours(expiryDate.getHours() + 4);
+                    setCookies('avote', true, {path: "/", expires: expiryDate});
+                    toast.success('Vote enregistré, merci!')
+                })
+            }else{
+                toast.error("Sélectionnez d'abord votre formation")
+            }
         }
 
-        // Envoi du vote au serveur
-        const voteData = {
-            is_day: false,
-            day: '', // Remplacez cette valeur par la date souhaitée
-            smiley: selectedEmoji,
-            stagiaire_id: 0, // Remplacez cette valeur par l'ID du stagiaire souhaité
-        };
-
-        fetch("http://localhost:8080/api/votes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(voteData),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Erreur lors de l'envoi du vote.");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                alert(`Vote envoyé : ${selectedEmoji}`);
-                setSelectedEmoji(null);
-                setIsVoteSent(true);
-
-                // Cacher le bouton Envoyer la note après l'envoi du vote
-                const sendVoteButton = document.querySelector(".vote-container button");
-                sendVoteButton.style.display = "none";
-            })
-            .catch((error) => {
-                console.error(error);
-                alert("Une erreur est survenue lors de l'envoi du vote.");
-            });
     };
 
     return (
@@ -60,34 +41,26 @@ const Note = () => {
             <div>
                 <span
                     className={`vote-emoji ${selectedEmoji === "smile" ? "selected" : ""}`}
-                    onClick={(e) => vote(e.target)}
+                    onClick={()=>sendVote(0)}
                     data-emoji="smile"
                 >
-                    &#128532;
+                    <img src={`${process.env.PUBLIC_URL}/smiley0.png`} className={"emojiLogo"}/>
                 </span>
                 <span
                     className={`vote-emoji ${selectedEmoji === "neutral" ? "selected" : ""}`}
-                    onClick={(e) => vote(e.target)}
+                    onClick={()=>sendVote(1)}
                     data-emoji="neutral"
                 >
-                    &#128528;
+                    <img src={`${process.env.PUBLIC_URL}/smiley1.png`} className={"emojiLogo"}/>
                 </span>
                 <span
                     className={`vote-emoji ${selectedEmoji === "frown" ? "selected" : ""}`}
-                    onClick={(e) => vote(e.target)}
+                    onClick={()=>sendVote(2)}
                     data-emoji="frown"
                 >
-                    &#128515;
+                    <img src={`${process.env.PUBLIC_URL}/smiley2.png`} className={"emojiLogo"}/>
                 </span>
             </div>
-            {!isVoteSent && (
-                <button onClick={sendVote} style={{ display: "none" }}>
-                    Envoyer la note
-                </button>
-            )}
-            {isVoteSent && (
-                <p>Merci pour votre vote !</p>
-            )}
         </div>
     );
 };
