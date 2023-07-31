@@ -53,9 +53,7 @@ const Main = () => {
               <div className="jqr-category-divider"></div>
               {content && content.artist && (
                 <div>
-                  {content.artist.photo && (
-                    <img src={content.artist.photo} alt="Artiste du jour" />
-                  )}
+                  <img className="img-artist" src={`${process.env.PUBLIC_URL}/artistlibrary/${content.artist.img1}`} width="95%" alt="artist" />
                   <p>Nom : {content.artist.name}</p>
                   <p>Ville : {content.artist.city}</p>
                   <p>Site : <Link to={`${content.artist.website}`} >{content.artist.website}</Link> </p>

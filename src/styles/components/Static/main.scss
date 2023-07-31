@@ -65,11 +65,13 @@
   background-color: #ccc;
   margin: 0 auto;
 }
+.img-artist{
+  border-radius: 10px;
+}
 
-/* Styles responsives */
 @media (max-width: 600px) {
   .jqr-container {
     margin: 10px;
-    height: auto; /* Annulez la hauteur fixe pour permettre un redimensionnement automatique */
+    height: auto;
   }
 }

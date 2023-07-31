@@ -121,7 +121,6 @@ h1 {
   transition: color 0.2s ease;
 }
 
-/* Create the border pseudo-elements */
 .modal-content a::before,
 .modal-content a::after {
   content: "";
@@ -133,23 +132,56 @@ h1 {
   transition: width 0.2s ease;
 }
 
-/* Border from the left */
 .modal-content a::before {
   left: 0;
 }
 
-/* Border from the right */
 .modal-content a::after {
   right: 0;
 }
 
-/* Hover effect */
 .modal-content a:hover {
-  color: #000; /* Change link color on hover if needed */
+  color: #000;
 }
 
-/* Expand the borders on hover */
 .modal-content a:hover::before,
 .modal-content a:hover::after {
   width: 50%;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styles pour le select */
+.formation-select {
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Styles pour le bouton */
+.formation-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 8px 16px;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  color:#000100ce;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formation-button:hover {
+  background-color: #0001001f;
+}
+
+/* Styles pour le conteneur de select et bouton */
+.select-container {
+  display: flex;
+  justify-content: center;
 }
