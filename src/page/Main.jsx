@@ -47,7 +47,7 @@ const Main = () => {
                 )}
               </div>
             ))}
-            {/* Artiste du jour */}
+            {/* ArtisteComponent du jour */}
             <div className="jqr-artist-section">
               <p className="jqr-category-header">Artiste du jour :</p>
               <div className="jqr-category-divider"></div>

@@ -8,6 +8,7 @@ import {
 } from "../../Services/apiService";
 import { nanoid } from "nanoid";
 import toast, { Toaster } from "react-hot-toast";
+import BurgerComponent from "../Burger/BurgerComponent";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,7 +63,7 @@ const Header = () => {
       <div>
         <Toaster position="top-left" reverseOrder={false} />
       </div>
-      <div className="title">
+      <div className="title" style={{textAlign: "center"}}>
         <h1>Menu du jour</h1>
         {formationStagiaire ? (
           <div>
@@ -107,9 +108,7 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <Link to="/main"> - Connaitre son heure de passage </Link>
-            <Link to="/main"> - Voir le tableau des alergène</Link>
-            <Link to="/main"> - Occupation </Link>
+            <BurgerComponent></BurgerComponent>
           </div>
         </div>
       )}
