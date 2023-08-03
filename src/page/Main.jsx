@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getDaily, getArtistOfDay } from "../Services/apiService";
+import { getDaily, getArtistOfDay, typesOfHoroscopes } from "../Services/apiService";
 import { Link } from "react-router-dom";
 
 const Main = () => {
   const [content, setContent] = useState(null);
   const [showAnswer, setShowAnswer] = useState([]);
+  const [horoscopeTypes, setHoroscopeTypes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,8 +13,12 @@ const Main = () => {
         const dailyContent = await getDaily();
         setContent(dailyContent);
         setShowAnswer(new Array(dailyContent.blagues.length).fill(false));
+
         const artist = await getArtistOfDay();
         setContent((prevContent) => ({ ...prevContent, artist }));
+
+        const types = await typesOfHoroscopes();
+        setHoroscopeTypes(types);
       } catch (error) {
         console.error(error);
       }
@@ -33,6 +38,17 @@ const Main = () => {
       <div className="jqr-content">
         {content ? (
           <div>
+            {/* horoscope */}
+            <div className="horoscope">
+              <select name="signe" id="signeAstro">
+                {horoscopeTypes.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Énigmes */}
             <p className="jqr-category-header">Énigme du jour :</p>
             <div className="jqr-category-divider"></div>
