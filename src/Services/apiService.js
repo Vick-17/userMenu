@@ -325,7 +325,7 @@ export const setunsetMessage = (messageId) => {
 
 export const getHoroscopeBySign = async (signeAstro) => {
   return fetch(`${API_URL_MICROSANDRINE}/horoscopes/${signeAstro}/type`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
@@ -339,8 +339,7 @@ export const getHoroscopeBySign = async (signeAstro) => {
     });
 };
 
-
-const getAllHoroscopeTypes = async () => {
+export const typesOfHoroscopes = async () => {
   try {
     const response = await fetch(`${API_URL_MICROSANDRINE}/horoscopes`, {
       method: "GET",
@@ -360,25 +359,6 @@ const getAllHoroscopeTypes = async () => {
     console.error("Error fetching data:", error);
     return [];
   }
-};
-
-
-export const typesOfHoroscopes = getAllHoroscopeTypes()
-  .then((types) => {
-    console.log("Types of Horoscopes:", types);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
-
-export const sendInfo = (message) => {
-  return fetch(`${API_URL_MICROSANDRINE}/messages`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(message),
-  });
 };
 
 export const setTv = (messageId) => {
