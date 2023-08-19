@@ -36,11 +36,15 @@ const Header = () => {
     }
   }, [formations, refresh]);
 
-  const handleSetCookies = () => { };
 
   const handleModalOpen = () => {
     setIsModalOpen(!isModalOpen);
     setIsBurgerContainerOpen(!isModalOpen);
+    if(isModalOpen){
+      document.body.style.overflow = 'auto'
+    }else{
+      document.body.style.overflow = 'hidden'
+    }
   };
 
   const handleClickConfirmFormation = () => {
@@ -106,7 +110,7 @@ const Header = () => {
         </label>
       </div>
       {isModalOpen && (
-        <div className="modal">
+        <div className="modal" style={{height: "100%"}}>
           <div className="modal-content">
             <BurgerComponent></BurgerComponent>
           </div>

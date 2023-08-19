@@ -24,6 +24,17 @@ export const checkStudent = () => {
         return response.json();
     }).catch(error => console.error(error));
 }
+export const getHoroscopeByType = (type) => {
+    return fetch(`${API_URL_MICROSANDRINE}/horoscopes/`+type+`/type`).then(response => {
+        return response.json();
+    }).catch(error => console.error(error));
+}
+
+export const getFullHoroscope = () => {
+    return fetch(`${API_URL_MICROSANDRINE}/horoscopes`).then(response => {
+        return response.json();
+    }).catch(error => console.error(error));
+}
 
 export const affectFormation = (id) => {
     return fetch(`${API_URL}/affectFormation/`+id, {

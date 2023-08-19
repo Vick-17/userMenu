@@ -110,6 +110,8 @@ h1 {
 }
 
 .burger-container {
+  position: absolute;
+  right: 15px;
   display: flex;
   align-items: center;
 }
@@ -200,12 +202,12 @@ h1 {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #494848;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 12vh;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .title-container {
