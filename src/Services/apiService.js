@@ -37,6 +37,11 @@ export const getFullHoroscope = () => {
         return response.json();
     }).catch(error => console.error(error));
 }
+export const getYesterdayGaspi = () => {
+    return fetch(`${API_URL}/yesterdaygaspi`).then(response => {
+        return response.json();
+    }).catch(error => console.error(error));
+}
 
 export const affectFormation = (id) => {
   return fetch(`${API_URL}/affectFormation/` + id, {

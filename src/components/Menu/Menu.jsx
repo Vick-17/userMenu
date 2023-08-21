@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchMenuByDate, getFormations } from "../../Services/apiService";
 import { formatDate } from "../../Services/formatDate";
+import Marquee from "react-fast-marquee";
 
 const Menu = () => {
   const [menus, setMenus] = useState(null);
