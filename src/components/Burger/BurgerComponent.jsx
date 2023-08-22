@@ -105,7 +105,7 @@ const handleClickReturn = () => {
                     <div><img width={selection === "Artiste" ? 40 : 32} src={`${process.env.PUBLIC_URL}/art.svg`} onClick={()=>handleClickMenu("Artiste")}alt="icone artiste"/></div>
                     <div style={
                     {width:selection === "Credits" ? 40 :  "32px", height:selection === "Credits" ? 40 :  "32px", background:"white", borderRadius:"50%",display:"flex",justifyContent:"center"}
-                    }><img width={selection === "Credits" ?36 : 28} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
+                    }><img width={selection === "Credits" ? 40 : 32} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
                     </>
                 }
                 </div>
@@ -177,14 +177,14 @@ const handleClickReturn = () => {
        <div style={{marginTop: "30px"}}>  leGorafi (https://www.legorafi.fr)  </div>
         
         
-       <div  style={{marginTop: "50px"}}> Nous reconnaissons le travail et les efforts fournis par ces sites pour mettre à disposition du contenu précieux, ce qui a grandement contribué à l'élaboration de cette application. Nous encourageons nos utilisateurs à visiter ces sites pour en apprendre davantage.
+       <div  style={{marginTop: "30px"}}> Nous reconnaissons le travail et les efforts fournis par ces sites pour mettre à disposition du contenu précieux, ce qui a grandement contribué à l'élaboration de cette application. Nous encourageons nos utilisateurs à visiter ces sites pour en apprendre davantage.
 
         Si nous avons omis de mentionner un site source, veuillez nous en informer afin que nous puissions rectifier cela.
         </div>
         
         <div style={{marginTop: "30px"}}>  Votre soutien et votre collaboration sont grandement appréciés.
 </div>
-        <div style={{marginTop: "30px"}}> Merci, à Ludo pour ces précieux conseils.
+        <div style={{marginTop: "30px"}}> Merci à Thierry le responsable de la Restauration de nous avoir fait confiance pour se projet et à Ludovic notre formateur en conception pour ces précieux conseils.
 </div>
         <div style={{marginTop: "40px"}}>
             Victor, Théo et Sandrine
