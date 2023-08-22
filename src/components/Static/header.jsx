@@ -58,6 +58,10 @@ const Header = () => {
     setRefresh((prevState) => !prevState);
   };
 
+  const update = () => {
+    setRefresh((prevState) => !prevState);
+  }
+
   const handleChangeSelect = (e) => {
     setSelectedFormation(e);
   };
@@ -112,7 +116,7 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal" style={{height: "100%"}}>
           <div className="modal-content">
-            <BurgerComponent></BurgerComponent>
+            <BurgerComponent formations={formations} formation={formationStagiaire} onSelectedFormationUpdate={update}></BurgerComponent>
           </div>
         </div>
       )}

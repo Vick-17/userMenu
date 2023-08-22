@@ -1,13 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getArtistOfDay, getDaily, getFullHoroscope, getHoroscopeByType} from "../../Services/apiService";
+import {useCookies} from "react-cookie";
+import {nanoid} from "nanoid";
+import toast from "react-hot-toast";
 
-const BurgerComponent = () => {
+const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => {
     const [selection, setSelection] = useState("Menu");
     const [selectedHoroscope, setSelectedHoroscope] = useState("");
     const [selectedNameHoroscope, setSelectedNameHoroscope] = useState("");
     const [artist, setArtist] = useState("");
     const [enigme, setEnigme] = useState("Bélier");
+    const [selectedFormation, setSelectedFormation] = useState(null);
+    const [formationStagiaire, setFormationStagiaire] = useState(null);
+
+    const [cookies, setCookies] = useCookies(["cookieFormation"]);
+    const [refresh, setRefresh] = useState(false);
+
     const [reponseEnigme, setReponseEnigme] = useState("");
     const [revealEnigme, setRevealEnigme] = useState(false);
     const [horoscope, setHoroscope] = useState([]);
@@ -19,13 +28,37 @@ const BurgerComponent = () => {
         getDaily().then((reponse)=>{
             setEnigme(reponse.enigme[0].text);
             setReponseEnigme(reponse.enigme[0].answer);
-            console.log(reponse);
         })
+        setFormationStagiaire(formation);
+        console.log(formations)
+        console.log(formation)
     }, [])
+
 
     const handleClickMenu = (type) => {
         setSelection(type)
     }
+
+    const handleChangeSelect = (e) => {
+        setSelectedFormation(e);
+        console.log(e)
+    };
+    const handleClickConfirmFormation = () => {
+        let expiryDate = new Date();
+        console.log(selectedFormation)
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        console.log(formations)
+        const selectedFormationObject = formations.find(formation => formation.id === +selectedFormation);
+        console.log(selectedFormationObject);
+
+        setCookies("cookieFormation", selectedFormation, {
+            path: "/",
+            expires: expiryDate,
+        });
+        toast.success("Formation enregistrée !");
+        setFormationStagiaire(selectedFormationObject);
+        onSelectedFormationUpdate();
+    };
 
     const handleClickReturn = () => {
         setSelection("Menu")
@@ -34,14 +67,12 @@ const BurgerComponent = () => {
     const handleClickRevealEnigme = () => {
         setRevealEnigme(true);
     }
-
     const getHoroscope = (type) => {
         setSelectedNameHoroscope(type);
         getFullHoroscope().then((response)=>{
             for(let i=0; i<response.length; i++){
                 console.log(response[i])
                 if(response[i].type === type){
-                    console.log("ok")
                     setSelectedHoroscope(response[i].textHoroscope);
                 }
             }
@@ -49,8 +80,8 @@ const BurgerComponent = () => {
     }
 
     useEffect(()=>{
-        console.log(artist)
-    }, [artist])
+
+    }, [formationStagiaire])
 
 
     return (
@@ -145,10 +176,35 @@ const BurgerComponent = () => {
 
                     </>
                     : selection === "Menu" ?
-                                    <div>
-                                        <div style={{display: "flex", justifyContent: "center"}} onClick={handleClickReturn}>
-                                            <div><img width={32} src={`${process.env.PUBLIC_URL}/settings.svg`} style={{transform : "scaleX(-1)", fill: "white"}}/></div>
-                                            <div style={{marginLeft: "0.5em", display: "flex", alignItems: "center"}}>Ma formation</div>
+                                    <div style={{}}>
+                                        <div style={{display: "flex", flexDirection: "column"}} onClick={handleClickReturn}>
+                                            <div style={{display: "flex", justifyContent: "center"}}>
+                                                <img width={32} src={`${process.env.PUBLIC_URL}/settings.svg`} style={{transform : "scaleX(-1)", fill: "white"}}/>
+                                                <div style={{marginLeft: "0.5em", display: "flex", alignItems: "center"}}>Ma formation</div>
+
+                                            </div>
+                                            <div style={{display: "flex", justifyContent: "center", fontSize: "2em"}}>{formationStagiaire ? formationStagiaire.nom : "Pas dformation"}</div>
+                                            <div style={{display: "flex", justifyContent: "center", flexDirection: "column"}}>
+                                                <select
+                                                    className="formation-select"
+                                                    value={selectedFormation}
+                                                    onChange={(e) => handleChangeSelect(e.target.value)}
+                                                >
+                                                    <option value={""} disabled>Selectionner une formation</option>
+                                                    {formations.length > 0 &&
+                                                        formations.map((formation) => (
+                                                            <option value={formation.id} key={nanoid()}>
+                                                                {formation.nom}
+                                                            </option>
+                                                        ))}
+                                                </select>
+                                                <button
+                                                    className="formation-button"
+                                                    onClick={() => handleClickConfirmFormation()}
+                                                >
+                                                    Modifier
+                                                </button>
+                                            </div>
                                         </div>
 
 
