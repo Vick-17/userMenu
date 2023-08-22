@@ -12,7 +12,7 @@ const BurgerComponent = () => {
     const [reponseEnigme, setReponseEnigme] = useState("");
     const [revealEnigme, setRevealEnigme] = useState(false);
     const [horoscope, setHoroscope] = useState([]);
-
+    
     useEffect(()=>{
         getArtistOfDay().then((response)=>{
             setArtist(response);
@@ -23,12 +23,12 @@ const BurgerComponent = () => {
             console.log(reponse);
         })
     }, [])
-
-    const handleClickMenu = (type) => {
+   
+const handleClickMenu = (type) => {
         setSelection(type)
     }
-
-    const handleClickReturn = () => {
+   
+const handleClickReturn = () => {
         setSelection("Menu")
     }
 
