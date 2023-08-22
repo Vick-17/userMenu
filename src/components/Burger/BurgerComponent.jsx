@@ -135,7 +135,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                     <div><img width={selection === "Artiste" ? 40 : 32} src={`${process.env.PUBLIC_URL}/art.svg`} onClick={()=>handleClickMenu("Artiste")}alt="icone artiste"/></div>
                     <div style={
                     {width:selection === "Credits" ? 40 :  "32px", height:selection === "Credits" ? 40 :  "32px", background:"white", borderRadius:"50%",display:"flex",justifyContent:"center"}
-                    }><img width={selection === "Credits" ?36 : 28} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
+                    }><img width={selection === "Credits" ? 40 : 32} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
                     </>
                 }
                 </div>
@@ -214,11 +214,38 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                                     </div>
 
 
-                    : selection === "Copyright" ?
-                                        <div>
-                                            Ici les copyright
-                                        </div>
-                    : null}
+:selection === "Copyright" ? 
+    <div style={{marginTop: "30px", maxHeight:"450px", overflowY: "scroll"}}>
+        Remerciements et Sources
+
+        Nous souhaitons exprimer notre gratitude envers les nombreuses ressources en ligne qui ont contribué à la création de cette application.
+        
+        
+        <div style={{marginTop: "30px"}}> Les informations et les éléments provenant des sites suivants ont été utilisés pour enrichir notre application, et nous tenons à les citer : </div>
+
+       <div style={{marginTop: "30px"}}>  artistetaday (https://www.artistaday.com)</div>
+
+       <div style={{marginTop: "30px"}}>  enigmatik.epikurieu (https://enigmatik.epikurieu.com) </div>
+
+       <div style={{marginTop: "30px"}}>  Blague api (https://www.blagues-api.fr) </div>
+
+       <div style={{marginTop: "30px"}}>  leGorafi (https://www.legorafi.fr)  </div>
+        
+        
+       <div  style={{marginTop: "30px"}}> Nous reconnaissons le travail et les efforts fournis par ces sites pour mettre à disposition du contenu précieux, ce qui a grandement contribué à l'élaboration de cette application. Nous encourageons nos utilisateurs à visiter ces sites pour en apprendre davantage.
+
+        Si nous avons omis de mentionner un site source, veuillez nous en informer afin que nous puissions rectifier cela.
+        </div>
+        
+        <div style={{marginTop: "30px"}}>  Votre soutien et votre collaboration sont grandement appréciés.
+</div>
+        <div style={{marginTop: "30px"}}> Merci à Thierry le responsable de la Restauration de nous avoir fait confiance pour se projet et à Ludovic notre formateur en conception pour ces précieux conseils.
+</div>
+        <div style={{marginTop: "40px"}}>
+            Victor, Théo et Sandrine
+        </div>
+    </div>
+ : null}
                 </div>
                 </div>
 
