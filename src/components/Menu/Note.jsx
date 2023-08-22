@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import {sendVoteToBdd, voteMenu} from "../../Services/apiService";
 import {useCookies} from "react-cookie";
+// eslint-disable-next-line no-unused-vars
 import toast, {Toaster} from "react-hot-toast";
 
 const Note = () => {
     const [selectedEmoji, setSelectedEmoji] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [isVoteSent, setIsVoteSent] = useState(false);
     const [cookies, setCookies] = useCookies(['cookieFormation', 'avote']);
 
+    // eslint-disable-next-line no-unused-vars
     const vote = (emoji) => {
         setSelectedEmoji(emoji.getAttribute("data-emoji"));
 
@@ -44,21 +48,21 @@ const Note = () => {
                     onClick={()=>sendVote(0)}
                     data-emoji="smile"
                 >
-                    <img src={`${process.env.PUBLIC_URL}/smiley0.png`} className={"emojiLogo"}/>
+                    <img src={`${process.env.PUBLIC_URL}/smiley0.png`}  alt="icone smiley"className={"emojiLogo"}/>
                 </span>
                 <span
                     className={`vote-emoji ${selectedEmoji === "neutral" ? "selected" : ""}`}
                     onClick={()=>sendVote(1)}
                     data-emoji="neutral"
                 >
-                    <img src={`${process.env.PUBLIC_URL}/smiley1.png`} className={"emojiLogo"}/>
+                    <img src={`${process.env.PUBLIC_URL}/smiley1.png`} alt='icone smileyNeutre' className={"emojiLogo"}/>
                 </span>
                 <span
                     className={`vote-emoji ${selectedEmoji === "frown" ? "selected" : ""}`}
                     onClick={()=>sendVote(2)}
                     data-emoji="frown"
                 >
-                    <img src={`${process.env.PUBLIC_URL}/smiley2.png`} className={"emojiLogo"}/>
+                    <img src={`${process.env.PUBLIC_URL}/smiley2.png`} alt='icone smileyFrown' className={"emojiLogo"}/>
                 </span>
             </div>
         </div>

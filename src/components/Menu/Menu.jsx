@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchMenuByDate, getFormations } from "../../Services/apiService";
 import { formatDate } from "../../Services/formatDate";
+// eslint-disable-next-line no-unused-vars
 import Marquee from "react-fast-marquee";
 
 const Menu = () => {
   const [menus, setMenus] = useState(null);
   const [date, setDate] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [formation, setFormation] = useState(null);
   const [isEveningMenu, setIsEveningMenu] = useState(false); // Nouvel état pour le menu du soir
 
@@ -92,9 +94,9 @@ const Menu = () => {
     <>
       <main>
         <div className="buttons-container">
-          <img src={`${process.env.PUBLIC_URL}/next.svg`} style={{transform : "scaleX(-1)"}}  onClick={handleShowPrevDayMenu}/>
+          <img src={`${process.env.PUBLIC_URL}/next.svg`} style={{transform : "scaleX(-1)"}} alt="icone suivant" onClick={handleShowPrevDayMenu}/>
           <span>{formatDate(date)}</span>
-          <img src={`${process.env.PUBLIC_URL}/next.svg`}  onClick={handleShowNextDayMenu}/>
+          <img src={`${process.env.PUBLIC_URL}/next.svg`} alt="icones suivant" onClick={handleShowNextDayMenu}/>
         </div>
         <div className="menu-category">
           <div className="title-plat-container">

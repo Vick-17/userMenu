@@ -159,11 +159,38 @@ const handleClickReturn = () => {
                                     </div>
 
 
-                    : selection === "Copyright" ?
-                                        <div>
-                                            Ici les copyright
-                                        </div>
-                    : null}
+:selection === "Copyright" ? 
+    <div style={{marginTop: "30px", maxHeight:"450px", overflowY: "scroll"}}>
+        Remerciements et Sources
+
+        Nous souhaitons exprimer notre gratitude envers les nombreuses ressources en ligne qui ont contribué à la création de cette application.
+        
+        
+        <div style={{marginTop: "30px"}}> Les informations et les éléments provenant des sites suivants ont été utilisés pour enrichir notre application, et nous tenons à les citer : </div>
+
+       <div style={{marginTop: "30px"}}>  artistetaday (https://www.artistaday.com)</div>
+
+       <div style={{marginTop: "30px"}}>  enigmatik.epikurieu (https://enigmatik.epikurieu.com) </div>
+
+       <div style={{marginTop: "30px"}}>  Blague api (https://www.blagues-api.fr) </div>
+
+       <div style={{marginTop: "30px"}}>  leGorafi (https://www.legorafi.fr)  </div>
+        
+        
+       <div  style={{marginTop: "50px"}}> Nous reconnaissons le travail et les efforts fournis par ces sites pour mettre à disposition du contenu précieux, ce qui a grandement contribué à l'élaboration de cette application. Nous encourageons nos utilisateurs à visiter ces sites pour en apprendre davantage.
+
+        Si nous avons omis de mentionner un site source, veuillez nous en informer afin que nous puissions rectifier cela.
+        </div>
+        
+        <div style={{marginTop: "30px"}}>  Votre soutien et votre collaboration sont grandement appréciés.
+</div>
+        <div style={{marginTop: "30px"}}> Merci, à Ludo pour ces précieux conseils.
+</div>
+        <div style={{marginTop: "40px"}}>
+            Victor, Théo et Sandrine
+        </div>
+    </div>
+ : null}
                 </div>
                 </div>
 
