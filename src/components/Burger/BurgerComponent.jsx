@@ -105,7 +105,7 @@ const handleClickReturn = () => {
                     <div><img width={selection === "Artiste" ? 40 : 32} src={`${process.env.PUBLIC_URL}/art.svg`} onClick={()=>handleClickMenu("Artiste")}alt="icone artiste"/></div>
                     <div style={
                     {width:selection === "Credits" ? 40 :  "32px", height:selection === "Credits" ? 40 :  "32px", background:"white", borderRadius:"50%",display:"flex",justifyContent:"center"}
-                    }><img width={selection === "Credits" ?36 : 28} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Credits")}alt="icone crédits"/></div>
+                    }><img width={selection === "Credits" ?36 : 28} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
                     </>
                 }
                 </div>
@@ -158,7 +158,12 @@ const handleClickReturn = () => {
 
                                     </div>
 
-                               : null}
+
+                    : selection === "Copyright" ?
+                                        <div>
+                                            Ici les copyright
+                                        </div>
+                    : null}
                 </div>
                 </div>
 
