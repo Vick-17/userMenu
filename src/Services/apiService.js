@@ -42,6 +42,11 @@ export const getYesterdayGaspi = () => {
         return response.json();
     }).catch(error => console.error(error));
 }
+export const getInfosTv = () => {
+    return fetch(`${API_URL_MICROSANDRINE}/messages/tvselection`).then(response => {
+        return response.json();
+    }).catch(error => console.error(error));
+}
 
 export const affectFormation = (id) => {
   return fetch(`${API_URL}/affectFormation/` + id, {
@@ -156,7 +161,7 @@ export const uploadFile = (file) => {
 
 //recuperation des formations
 export const getFormations = () => {
-  return fetch(`${API_URL}/formations`)
+  return fetch(`${API_URL}/formations/placed`)
     .then((response) => response.json())
     .then((data) => {
       return data;
@@ -408,6 +413,21 @@ export const setPhone = (messageId) => {
 
 export const getRandomMessages = (id) => {
   return fetch(`${API_URL_MICROSANDRINE}/messages/getrandom/` + id, {
+    method: "GET",
+    headers: {
+      "Cache-Control": "no-cache",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+export const getInfosPhone = () => {
+  return fetch(`${API_URL_MICROSANDRINE}/messages/phoneselection`, {
     method: "GET",
     headers: {
       "Cache-Control": "no-cache",
