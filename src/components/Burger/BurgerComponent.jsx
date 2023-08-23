@@ -94,6 +94,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                             selection === "Artiste" ? "Artiste du jour" :
                                 selection === "Horoscope" ? "Horoscope de la semaine" :
                                     selection === "Enigme" ? "Enigme du jour" :
+                                    selection === "Copyright" ? "Remerciements et Sources" :
                                         null
                         }
                     </strong>                </div>
@@ -216,8 +217,6 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
 
 :selection === "Copyright" ? 
     <div style={{marginTop: "30px", maxHeight:"450px", overflowY: "scroll"}}>
-        Remerciements et Sources
-
         Nous souhaitons exprimer notre gratitude envers les nombreuses ressources en ligne qui ont contribué à la création de cette application.
         
         
@@ -239,7 +238,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
         
         <div style={{marginTop: "30px"}}>  Votre soutien et votre collaboration sont grandement appréciés.
 </div>
-        <div style={{marginTop: "30px"}}> Merci à Thierry le responsable de la Restauration de nous avoir fait confiance pour se projet et à Ludovic notre formateur en conception pour ces précieux conseils.
+        <div style={{marginTop: "30px"}}> Merci à Thierry le responsable de la Restauration de nous avoir fait confiance pour se projet et à Ludovic notre formateur en conception pour ses précieux conseils.
 </div>
         <div style={{marginTop: "40px"}}>
             Victor, Théo et Sandrine
