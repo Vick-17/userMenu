@@ -1,16 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {getArtistOfDay, getDaily, getFullHoroscope, getHoroscopeByType} from "../../Services/apiService";
+import {
+    getArtistOfDay,
+    getDaily,
+    getFullHoroscope,
+    getHoroscopeByType, getInfosPhone,
+    getYesterdayGaspi
+} from "../../Services/apiService";
 import {useCookies} from "react-cookie";
 import {nanoid} from "nanoid";
 import toast from "react-hot-toast";
+import {useSocket} from "../../context/SocketContext";
 
 const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => {
     const [selection, setSelection] = useState("Menu");
     const [selectedHoroscope, setSelectedHoroscope] = useState("");
     const [selectedNameHoroscope, setSelectedNameHoroscope] = useState("");
     const [artist, setArtist] = useState("");
-    const [enigme, setEnigme] = useState("Bélier");
+    const [enigme, setEnigme] = useState("");
     const [selectedFormation, setSelectedFormation] = useState(null);
     const [formationStagiaire, setFormationStagiaire] = useState(null);
 
@@ -19,7 +26,12 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
 
     const [reponseEnigme, setReponseEnigme] = useState("");
     const [revealEnigme, setRevealEnigme] = useState(false);
+    const [onClick1, setOnClick1] = useState(false);
+    const [onClick2, setOnClick2] = useState(false);
+
     const [horoscope, setHoroscope] = useState([]);
+    const socket = useSocket();
+
 
     useEffect(()=>{
         getArtistOfDay().then((response)=>{
@@ -43,6 +55,13 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
         setSelectedFormation(e);
         console.log(e)
     };
+
+    const handleClickImg1 = () => {
+        setOnClick1(prevState => !prevState)
+    }
+    const handleClickImg2 = () => {
+        setOnClick2(prevState => !prevState)
+    }
     const handleClickConfirmFormation = () => {
         let expiryDate = new Date();
         console.log(selectedFormation)
@@ -87,14 +106,16 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
     return (
         <>
             <div style={{position: "relative"}}>
+                <div style={{opacity: "30%", position: "absolute", top: (selection === "Menu") ? "43vh" : "45vh", right:"-20vw", transform: "scaleX(-1)", display: (selection === "Artiste" || selection === "Toque") ? "none" : "block"}}><img width="80%" src={`${process.env.PUBLIC_URL}/carot.svg`} alt="images artiste"/></div>
 
-                <div style={{marginBottom: "1em", color: "white"}}>
+                <div style={{marginBottom: "1em", color: "white", position: "relative"}}>
                     <strong>
                         {
                             selection === "Artiste" ? "Artiste du jour" :
                                 selection === "Horoscope" ? "Horoscope de la semaine" :
                                     selection === "Enigme" ? "Enigme du jour" :
-                                    selection === "Copyright" ? "Remerciements et Sources" :
+                                        selection === "Toque" ? "Recette du Chef" :
+                                            selection === "Copyright" ? "Remerciements et Sources" :
                                         null
                         }
                     </strong>                </div>
@@ -105,7 +126,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                     flexDirection: "column",
                     justifyContent: "start",
                     alignItems: "center",
-                    height: "calc(80vh - 20px)"
+                    height: "calc(80vh - 20px)",
                 }}>
                 { selection === "Horoscope" ?
 <>
@@ -134,6 +155,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                         <div><img width={selection === "Horoscope" ? 40 : 32} src={`${process.env.PUBLIC_URL}/moon.svg`} onClick={()=>handleClickMenu("Horoscope")}alt="icone horoscope"/></div>
                     <div><img width={selection === "Enigme" ? 40 : 32} src={`${process.env.PUBLIC_URL}/enigme.png`} onClick={()=>handleClickMenu("Enigme")}alt="icone égnime"/></div>
                     <div><img width={selection === "Artiste" ? 40 : 32} src={`${process.env.PUBLIC_URL}/art.svg`} onClick={()=>handleClickMenu("Artiste")}alt="icone artiste"/></div>
+                    <div><img width={selection === "Toque" ? 40 : 32} src={`${process.env.PUBLIC_URL}/toquetoque.svg`} onClick={()=>handleClickMenu("Toque")}alt="icone recette"/></div>
                     <div style={
                     {width:selection === "Credits" ? 40 :  "32px", height:selection === "Credits" ? 40 :  "32px", background:"white", borderRadius:"50%",display:"flex",justifyContent:"center"}
                     }><img width={selection === "Credits" ? 40 : 32} style={{margin:selection === "Credits" ? "0 0 0 2px" :  "0"}} src={`${process.env.PUBLIC_URL}/PhCopyrightBold.svg`} onClick={()=>handleClickMenu("Copyright")}alt="icone crédits"/></div>
@@ -144,11 +166,19 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                 <div style={{width: "90%", margin: "20px", color: "white"}}>
                     { selection === "Horoscope" ?
                         <>
-                            <div style={{marginBottom: "1em"}}><strong>{selectedNameHoroscope}</strong></div>
-                            <div>{selectedHoroscope}</div>
+                        { selectedHoroscope === "" ?
+                            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                                <div><strong>Sélectionnez votre signe astral !</strong></div>
+                            </div>
+                            :
+                            <>
+                                <div style={{marginBottom: "1em"}}><strong>{selectedNameHoroscope}</strong></div>
+                                <div>{selectedHoroscope}</div>
+                            </>
+                        }
                         </>
                         : selection === "Artiste" ?
-                            <div>
+                            <div style={{maxHeight:"80vh", overflowY: "auto"}}>
                                 <div style={{position: "absolute", top: "-10px", right: "35px"}} onClick={handleClickReturn}><img width={32} src={`${process.env.PUBLIC_URL}/backburger.svg`} style={{transform : "scaleX(-1)", fill: "white"}} alt="retour burger"/></div>
 
                                 <div style={{fontWeight: "bold", fontSize: "large"}}>
@@ -157,18 +187,21 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                                 <div>
                                     {artist && artist.city}
                                 </div>
-                                <div style={{marginTop: "1em", display: "flex", justifyContent: "center"}}>
-                                    <img width={"80%"} src={`${process.env.PUBLIC_URL}/artistlibrary/${artist.img1}`} onClick={() => getHoroscope("belier")} alt="images artiste"/>
+                                <div style={{marginTop: "1em", display: "flex", justifyContent: "center", zIndex: "10"}}>
+                                    <img width={onClick1 ? "100%" : "80%"} src={`${process.env.PUBLIC_URL}/artistlibrary/${artist.img1}`} alt="images artiste" onClick={handleClickImg1} style={{zIndex: "100"}}/>
                                 </div>
-                                <div style={{marginTop: "1em", display: "flex", justifyContent: "center"}}>
-                                    <img width={"80%"} src={`${process.env.PUBLIC_URL}/artistlibrary/${artist.img2}`} onClick={() => getHoroscope("belier")}alt=" artiste"/>
+                                <div style={{marginTop: "1em", display: "flex", justifyContent: "center", zIndex: "10"}}>
+                                    <img width={onClick2 ? "100%" : "80%"} src={`${process.env.PUBLIC_URL}/artistlibrary/${artist.img2}`} alt=" artiste" onClick={handleClickImg2} style={{zIndex: "100"}}/>
                                 </div>
                                 <div style={{marginTop: "1em", display: "flex", justifyContent: "center"}}>
                                     {artist && artist.website}
                                 </div>
                             </div>
                     : selection === "Enigme" ?
-                    <>
+
+                    <div  style={{maxHeight:"80vh", overflowY: "scroll"}}>
+                        <div style={{position: "absolute", top: "-10px", right: "35px"}} onClick={handleClickReturn}><img width={32} src={`${process.env.PUBLIC_URL}/backburger.svg`} style={{transform : "scaleX(-1)", fill: "white"}} alt="icone astro"/></div>
+
                         <div>{enigme}</div>
                         {revealEnigme === false ?
                             <div style={{marginTop: "1em"}} onClick={handleClickRevealEnigme}><button className={"btn1"}>Réponse</button></div>
@@ -178,7 +211,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                             </div>
                         }
 
-                    </>
+                    </div>
                     : selection === "Menu" ?
                                     <div style={{}}>
                                         <div style={{display: "flex", flexDirection: "column"}} onClick={handleClickReturn}>
@@ -187,7 +220,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                                                 <div style={{marginLeft: "0.5em", display: "flex", alignItems: "center"}}>Ma formation</div>
 
                                             </div>
-                                            <div style={{display: "flex", justifyContent: "center", fontSize: "2em"}}>{formationStagiaire ? formationStagiaire.nom : "Pas dformation"}</div>
+                                            <div style={{display: "flex", justifyContent: "center", fontSize: "2em"}}>{formationStagiaire ? formationStagiaire.nom : "Pas de formation"}</div>
                                             <div style={{display: "flex", justifyContent: "center", flexDirection: "column"}}>
                                                 <select
                                                     className="formation-select"
@@ -196,7 +229,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
                                                 >
                                                     <option value={""} disabled>Selectionner une formation</option>
                                                     {formations.length > 0 &&
-                                                        formations.map((formation) => (
+                                                        formations.filter(formation => !formation.delete).map((formation) => (
                                                             <option value={formation.id} key={nanoid()}>
                                                                 {formation.nom}
                                                             </option>
@@ -216,7 +249,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
 
 
 :selection === "Copyright" ? 
-    <div style={{marginTop: "30px", maxHeight:"450px", overflowY: "scroll"}}>
+    <div style={{maxHeight:"80vh", overflowY: "scroll"}}>
         Nous souhaitons exprimer notre gratitude envers les nombreuses ressources en ligne qui ont contribué à la création de cette application.
         
         
@@ -244,7 +277,7 @@ const BurgerComponent = ({formations, formation, onSelectedFormationUpdate}) => 
             Victor, Théo et Sandrine
         </div>
     </div>
- : null}
+                                        : null}
                 </div>
                 </div>
 

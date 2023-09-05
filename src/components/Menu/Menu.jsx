@@ -3,13 +3,16 @@ import { fetchMenuByDate, getFormations } from "../../Services/apiService";
 import { formatDate } from "../../Services/formatDate";
 // eslint-disable-next-line no-unused-vars
 import Marquee from "react-fast-marquee";
+import {useSocket} from "../../context/SocketContext";
 
 const Menu = () => {
   const [menus, setMenus] = useState(null);
   const [date, setDate] = useState(null);
+  const [todayMenu, setTodayMenu] = useState(true)
   // eslint-disable-next-line no-unused-vars
   const [formation, setFormation] = useState(null);
   const [isEveningMenu, setIsEveningMenu] = useState(false); // Nouvel état pour le menu du soir
+  const socket = useSocket();
 
   useEffect(() => {
     const dateDuJour = new Date();
@@ -23,10 +26,27 @@ const Menu = () => {
         setMenus(data);
       })
       .catch((error) => {
+        setMenus(null);
         console.error(error);
       });
-    console.log(today);
   }, []);
+
+  useEffect(() => {
+    const dateDuJour = new Date();
+    const year = dateDuJour.getFullYear();
+    const month = ("0" + (dateDuJour.getMonth() + 1)).slice(-2);
+    const day = ("0" + dateDuJour.getDate()).slice(-2);
+    const today = `${year}-${month}-${day}`;
+    setDate(today);
+    fetchMenuByDate(today)
+        .then((data) => {
+          setMenus(data);
+        })
+        .catch((error) => {
+          setMenus(null);
+          console.error(error);
+        });
+  }, [socket.message]);
 
   useEffect(() => {
     getFormations()
@@ -53,6 +73,7 @@ const Menu = () => {
         setMenus(data);
       })
       .catch((error) => {
+        setMenus(null);
         console.error(error);
       });
   };
@@ -66,15 +87,19 @@ const Menu = () => {
     const prevDay = `${year}-${month}-${day}`;
     setDate(prevDay);
 
+
     // Charger le menu du soir au lieu du menu du jour
     fetchMenuByDate(prevDay, isEveningMenu ? "soir" : "jour")
       .then((data) => {
         setMenus(data);
       })
       .catch((error) => {
+        setMenus(null);
         console.error(error);
       });
   };
+
+
 
   // Fonction pour basculer entre le menu du jour et du soir
   const toggleMenuType = () => {
@@ -175,6 +200,8 @@ const Menu = () => {
             <h2>Plats</h2>
           </div>
 
+
+
           {menus ? (
             // Afficher les plats du menu du soir s'il est disponible, sinon du menu du jour
             Object.values(
@@ -200,6 +227,36 @@ const Menu = () => {
             </div>
           )}
         </div>
+
+        {menus && menus.descriptionMenu.jour.platpedago.length > 0 ?
+            <div className="menu-category">
+              <div className="title-plat-container">
+                <svg
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="#000000"
+                >
+                  <path
+                      d="M6 20h3m3 0H9m0 0v-5M17 20v-8s2.5-1 2.5-3V4.5M17 8.5v-4M4.5 11c1 2.128 4.5 4 4.5 4s3.5-1.872 4.5-4c1.08-2.297 0-6.5 0-6.5h-9s-1.08 4.203 0 6.5z"
+                      stroke="#000000"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                  ></path>
+                </svg>
+                <h2>Plats pédagogiques</h2>
+              </div>
+              {menus && menus.descriptionMenu.jour.platpedago && menus.descriptionMenu.jour.platpedago.map((plat, index)=>(
+                  <div className="menu-item" key={index}>
+                    <span>{plat}</span>
+                  </div>
+              ))}
+            </div>
+            :null}
 
         <div className="menu-category">
           <div className="title-plat-container">

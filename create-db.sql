@@ -1,0 +1,2 @@
+CREATE DATABASE dbblague;
+CREATE DATABASE dbmain;

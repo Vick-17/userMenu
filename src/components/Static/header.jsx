@@ -4,37 +4,57 @@ import { Link } from "react-router-dom";
 import {
   affectFormation,
   checkStudent,
-  getFormations,
+  getFormations, getInfosPhone, getYesterdayGaspi,
 } from "../../Services/apiService";
 import { nanoid } from "nanoid";
 import toast, { Toaster } from "react-hot-toast";
 import BurgerComponent from "../Burger/BurgerComponent";
+import {useSocket} from "../../context/SocketContext";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBurgerContainerOpen, setIsBurgerContainerOpen] = useState(false);
-  const [cookies, setCookies] = useCookies(["cookieFormation"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["cookieFormation"]);
   const [formationStagiaire, setFormationStagiaire] = useState(null);
   const [formations, setFormations] = useState([]);
-  const [selectedFormation, setSelectedFormation] = useState(null);
+  const [selectedFormation, setSelectedFormation] = useState("");
   const [refresh, setRefresh] = useState(false);
+  const socket = useSocket();
+
+  const toastCookies = () => toast()
 
   useEffect(() => {
     getFormations().then((response) => {
       setFormations(response);
-      console.log(response);
     });
   }, []);
+
 
   useEffect(() => {
     if (cookies.cookieFormation) {
       for (let i = 0; i < formations.length; i++) {
         if (formations[i].id == cookies.cookieFormation) {
-          setFormationStagiaire(formations[i]);
+          if(formations[i].delete == true || formations[i].active == false){
+            setFormationStagiaire(null);
+            removeCookie("cookieFormation");
+          }else{
+            setFormationStagiaire(formations[i]);
+          }
         }
       }
     }
   }, [formations, refresh]);
+
+  useEffect(() => {
+    console.log("formation modif", socket.message);
+
+    if (socket.message) {
+      getFormations().then((response) => {
+        setFormations(response);
+        console.log(response);
+      });
+    }
+  }, [socket.message]);
 
 
   const handleModalOpen = () => {
@@ -54,7 +74,7 @@ const Header = () => {
       path: "/",
       expires: expiryDate,
     });
-    toast.success("Formation enregistrée !");
+    toast.success("Formation enregistrée !", {duration: 1000});
     setRefresh((prevState) => !prevState);
   };
 
@@ -65,6 +85,72 @@ const Header = () => {
   const handleChangeSelect = (e) => {
     setSelectedFormation(e);
   };
+
+  const handleAccept = () => {
+    let expiryDate = new Date();
+    expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+    setCookies("cookieFormation", selectedFormation, {
+      path: "/",
+      expires: expiryDate,
+    });
+    setRefresh((prevState) => !prevState);
+    console.log('Cookies acceptés.');
+    toast.dismiss(cookieToastId);
+    displayToastAccept();
+    setTimeout(()=>{
+      toast.dismiss(toastAccept);
+    }, 1000)
+
+  }
+
+  const handleReject = () => {
+    console.log('Cookies refusés.');
+    toast.dismiss(cookieToastId);
+  }
+
+  let cookieToastId;
+  let toastAccept
+
+  const displayToastAccept = () => {
+    let formationToast1;
+    const formToast1 = () =>{
+      formationToast1 = toast.success("Formation enregistrée !", {duration: 1000});
+    }
+    formToast1();
+    setTimeout(()=>{
+      toast.dismiss(formationToast1);
+    }, 1500)
+  }
+
+  const displayToast = () => {
+    if(selectedFormation !== ""){
+      cookieToastId = toast(
+          (t) => (
+              <div style={{display: "flex", flexDirection: "column", textAlign: "center"}}>
+                <div>Aucune donnée personnelle n'est collectée sur ce site, vous devez cependant accepter les cookies pour sauvegarder votre formation et permettre la gestion des votes anonymes.</div>
+                <div>
+                  <button style={{marginRight: "1em"}} className="formation-button" onClick={handleAccept}>J'accepte</button>
+                  <button className="formation-button" onClick={handleReject}>Je refuse</button>
+                </div>
+              </div>
+          ),
+          {
+            duration: Infinity, // Le toast ne disparaît pas tout seul
+            position: 'bottom-center',
+          }
+      );
+    }else{
+      let formationToast2;
+      const formToast2 = () =>{
+        formationToast2 = toast.error("Sélectionnez d'abord une formation !", {duration: 1000});
+      }
+      formToast2();
+      setTimeout(()=>{
+        toast.dismiss(formationToast2);
+      }, 1500)
+    }
+
+  }
 
   return (
     <header>
@@ -81,12 +167,12 @@ const Header = () => {
           <div className="select-container">
             <select
               className="formation-select"
-              value={selectedFormation}
-              onChange={(e) => handleChangeSelect(e.target.value)}
+            value={selectedFormation}
+              onChange={(e) => setSelectedFormation(e.target.value)}
             >
-              <option disabled>Selectionner une formation</option>
+              <option value="">Sélectionner une formation</option>
               {formations.length > 0 &&
-                formations.map((formation) => (
+                formations.filter(formation => !formation.delete && formation.active).map((formation) => (
                   <option value={formation.id} key={nanoid()}>
                     {formation.nom}
                   </option>
@@ -94,7 +180,7 @@ const Header = () => {
             </select>
             <button
               className="formation-button"
-              onClick={() => handleClickConfirmFormation()}
+              onClick={displayToast}
             >
               Valider
             </button>
@@ -114,8 +200,8 @@ const Header = () => {
         </label>
       </div>
       {isModalOpen && (
-        <div className="modal" style={{height: "100%"}}>
-          <div className="modal-content">
+        <div className="modal" style={{height: "100%", overflow: "hidden"}}>
+          <div className="modal-content" style={{height: "100%", overflow: "hidden"}}>
             <BurgerComponent formations={formations} formation={formationStagiaire} onSelectedFormationUpdate={update}></BurgerComponent>
           </div>
         </div>
